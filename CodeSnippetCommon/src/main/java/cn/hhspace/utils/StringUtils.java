@@ -2,8 +2,6 @@ package cn.hhspace.utils;
 
 import com.google.common.base.Strings;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -132,8 +130,7 @@ public class StringUtils
         }
     }
 
-    @Nullable
-    public static byte[] toUtf8Nullable(@Nullable final String string)
+    public static byte[] toUtf8Nullable(final String string)
     {
         if (string == null) {
             return null;
@@ -176,8 +173,7 @@ public class StringUtils
      *
      * Returns null if the input is null.
      */
-    @Nullable
-    public static String encodeForFormat(@Nullable final String s)
+    public static String encodeForFormat(final String s)
     {
         if (s == null) {
             return null;
@@ -206,8 +202,7 @@ public class StringUtils
      *
      * @return application/x-www-form-urlencoded format encoded String, but with "+" replaced with "%20".
      */
-    @Nullable
-    public static String urlEncode(@Nullable String s)
+    public static String urlEncode(String s)
     {
         if (s == null) {
             return null;
@@ -221,7 +216,6 @@ public class StringUtils
         }
     }
 
-    @Nullable
     public static String urlDecode(String s)
     {
         if (s == null) {
@@ -333,7 +327,7 @@ public class StringUtils
      *
      * @return {@code string} itself if it is non-null; {@code ""} if it is null
      */
-    public static String nullToEmptyNonDruidDataString(@Nullable String string)
+    public static String nullToEmptyNonDruidDataString(String string)
     {
         //CHECKSTYLE.OFF: Regexp
         return Strings.nullToEmpty(string);
@@ -350,8 +344,7 @@ public class StringUtils
      * @return {@code string} itself if it is nonempty; {@code null} if it is
      * empty or null
      */
-    @Nullable
-    public static String emptyToNullNonDruidDataString(@Nullable String string)
+    public static String emptyToNullNonDruidDataString(String string)
     {
         //CHECKSTYLE.OFF: Regexp
         return Strings.emptyToNull(string);
@@ -482,8 +475,7 @@ public class StringUtils
      *
      * @return the string left-padded with pad to a length of len or null if the pad is empty or the len is less than 0.
      */
-    @Nonnull
-    public static String lpad(@Nonnull String base, int len, @Nonnull String pad)
+    public static String lpad(String base, int len, String pad)
     {
         if (len <= 0) {
             return "";
@@ -529,8 +521,7 @@ public class StringUtils
      *
      * @return the string right-padded with pad to a length of len or null if the pad is empty or the len is less than 0.
      */
-    @Nonnull
-    public static String rpad(@Nonnull String base, int len, @Nonnull String pad)
+    public static String rpad(String base, int len, String pad)
     {
         if (len <= 0) {
             return "";
@@ -571,8 +562,7 @@ public class StringUtils
      *
      * @return the string after truncated to maxBytes
      */
-    @Nullable
-    public static String chop(@Nullable final String s, final int maxBytes)
+    public static String chop(final String s, final int maxBytes)
     {
         if (s == null) {
             return null;
@@ -588,8 +578,7 @@ public class StringUtils
      * Shorten "s" to "maxBytes" chars. Fast and loose because these are *chars* not *bytes*. Use
      * {@link #chop(String, int)} for slower, but accurate chopping.
      */
-    @Nullable
-    public static String fastLooseChop(@Nullable final String s, final int maxBytes)
+    public static String fastLooseChop(final String s, final int maxBytes)
     {
         if (s == null || s.length() <= maxBytes) {
             return s;

@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Throwables;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -33,8 +32,8 @@ public class RetryUtils {
             final Predicate<Throwable> shouldRetry,
             final int quietTries,
             final int maxTries,
-            @Nullable final CleanupAfterFailure cleanupAfterFailure,
-            @Nullable final String messageOnRetry
+            final CleanupAfterFailure cleanupAfterFailure,
+            final String messageOnRetry
     ) throws Exception
     {
         Preconditions.checkArgument(maxTries > 0, "maxTries > 0");
@@ -88,7 +87,7 @@ public class RetryUtils {
 
     public static void awaitNextRetry(
             final Throwable e,
-            @Nullable final String messageOnRetry,
+            final String messageOnRetry,
             final int nTry,
             final int maxRetries,
             final boolean quiet
