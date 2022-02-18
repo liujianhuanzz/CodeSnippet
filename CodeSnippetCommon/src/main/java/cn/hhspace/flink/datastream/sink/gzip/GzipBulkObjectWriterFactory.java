@@ -11,7 +11,7 @@ import java.util.zip.GZIPOutputStream;
  * @Author: Jianhuan-LIU
  * @Descriptions: write object to hdfs with Gzip format
  * @Date: 2022/2/16 6:46 下午
- * @Package: com.qianxin.flink.sink.gzip
+ * @Package: cn.hhspace.flink.sink.gzip
  */
 public class GzipBulkObjectWriterFactory<T> implements BulkWriter.Factory<T> {
     @Override

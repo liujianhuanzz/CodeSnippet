@@ -10,7 +10,7 @@ import java.util.zip.GZIPOutputStream;
  * @Author: Jianhuan-LIU
  * @Descriptions: write string to hdfs with Gzip format
  * @Date: 2022/2/16 6:43 下午
- * @Package: com.qianxin.flink.sink.gzip
+ * @Package: cn.hhspace.flink.sink.gzip
  */
 public class GzipBulkStringWriterFactory<T> implements BulkWriter.Factory<T> {
     @Override

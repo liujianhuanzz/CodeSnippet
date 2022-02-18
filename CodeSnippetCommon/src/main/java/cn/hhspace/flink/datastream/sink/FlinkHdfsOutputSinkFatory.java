@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: Jianhuan-LIU
  * @Descriptions:
  * @Date: 2022/2/16 6:50 下午
- * @Package: com.qianxin.flink.sink
+ * @Package: cn.hhspace.flink.sink
  */
 public class FlinkHdfsOutputSinkFatory {
 
