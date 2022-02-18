@@ -1,10 +1,13 @@
 package cn.hhspace.flink.datastream;
 
 import cn.hhspace.flink.datastream.sink.FlinkEsOutputProcessFunction;
+import cn.hhspace.flink.datastream.sink.FlinkHdfsOutputSinkFatory;
 import cn.hhspace.flink.datastream.sink.FlinkKafkaProducerFatory;
 import cn.hhspace.flink.datastream.source.SensorReading;
 import cn.hhspace.flink.datastream.source.SensorSource;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.flink.api.common.functions.FilterFunction;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.connector.jdbc.JdbcConnectionOptions;
 import org.apache.flink.connector.jdbc.JdbcExecutionOptions;
 import org.apache.flink.connector.jdbc.JdbcSink;
@@ -43,6 +46,13 @@ public class FlinkSinkToKafka {
         //写入kafka
         readings.addSink(FlinkKafkaProducerFatory.getFlinkKafkaProducer());
         //readings.print();
+        //写入hdfs
+        readings.map(new MapFunction<SensorReading, String>() {
+            @Override
+            public String map(SensorReading sensorReading) throws Exception {
+                return new ObjectMapper().writeValueAsString(sensorReading);
+            }
+        }).addSink(FlinkHdfsOutputSinkFatory.getSink());
 
         DataStream<SensorReading> filter = readings.filter(new FilterFunction<SensorReading>() {
             @Override
