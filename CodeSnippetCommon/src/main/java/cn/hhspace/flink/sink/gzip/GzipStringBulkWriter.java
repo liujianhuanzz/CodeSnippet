@@ -1,4 +1,4 @@
-package cn.hhspace.flink.datastream.sink.gzip;
+package cn.hhspace.flink.sink.gzip;
 
 import org.apache.flink.api.common.serialization.BulkWriter;
 

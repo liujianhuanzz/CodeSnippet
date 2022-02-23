@@ -1,5 +1,6 @@
-package cn.hhspace.flink.datastream.source;
+package cn.hhspace.flink.source;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -19,6 +20,7 @@ public class SensorReading {
     @JsonProperty
     public double temperature;
 
+    @JsonCreator
     public SensorReading(String id, long timestamp, double temperature) {
         this.id = id;
         this.timestamp = timestamp;

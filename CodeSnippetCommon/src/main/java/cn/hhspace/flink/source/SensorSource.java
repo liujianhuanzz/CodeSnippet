@@ -1,4 +1,4 @@
-package cn.hhspace.flink.datastream.source;
+package cn.hhspace.flink.source;
 
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
 
@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class SensorSource extends RichParallelSourceFunction<SensorReading> {
 
+    private static final long serialVersionUID = 4049262408264706429L;
     private boolean running = true;
 
     @Override
