@@ -1,5 +1,8 @@
 package cn.hhspace.guice;
 
+import cn.hhspace.guice.mapbinder.Db;
+import cn.hhspace.guice.mapbinder.DbModule;
+import cn.hhspace.guice.mapbinder.PropertiesModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -11,13 +14,13 @@ import java.util.Collection;
 public class TestConfiggedDI {
 
     public static void main(String[] args) {
-        Injector injector = Guice.createInjector(makeDefualtModules());
+        Injector injector = Guice.createInjector(makeDefaultModules());
         Db instance = injector.getInstance(Db.class);
         instance.connectTest();
         instance.doQuery();
     }
 
-    private static Collection<Module> makeDefualtModules() {
+    private static Collection<Module> makeDefaultModules() {
         return ImmutableList.of(
                 new PropertiesModule(Arrays.asList("runtime.properties")),
                 new DbModule()

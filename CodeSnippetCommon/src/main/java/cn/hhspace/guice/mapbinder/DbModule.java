@@ -1,4 +1,4 @@
-package cn.hhspace.guice;
+package cn.hhspace.guice.mapbinder;
 
 import com.google.inject.Binder;
 import com.google.inject.Key;

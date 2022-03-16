@@ -1,4 +1,4 @@
-package cn.hhspace.guice;
+package cn.hhspace.guice.mapbinder;
 
 /**
  * PG实现类

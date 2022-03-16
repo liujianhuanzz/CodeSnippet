@@ -1,6 +1,8 @@
 package cn.hhspace.jsonschema;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.inject.name.Named;
 import com.kjetland.jackson.jsonSchema.annotations.*;
 
 /**
@@ -17,6 +19,8 @@ public class TestPersion {
     @JsonSchemaDescription("这个字段就是用来指定测试人的姓名")
     @JsonSchemaInject(ints = { @JsonSchemaInt(path = "minlength", value = 1) })
     @JsonProperty(required = true)
+    @JacksonInject
+    @Named("name")
     public String name = "张三";
 
     @JsonSchemaTitle("测试人的年龄")
