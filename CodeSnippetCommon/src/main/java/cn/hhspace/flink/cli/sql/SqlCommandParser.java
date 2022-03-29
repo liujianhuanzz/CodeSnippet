@@ -72,11 +72,18 @@ public class SqlCommandParser {
 
         INSERT_INTO(
                 "(INSERT\\s+INTO.*)",
-                SINGLE_OPERAND),
+                SINGLE_OPERAND
+        ),
+
+        CREATE_FUNCTION(
+                "(CREATE\\s+(TEMPORARY\\s+|TEMPORARY\\s+SYSTEM\\s+)?FUNCTION.*)",
+                SINGLE_OPERAND
+        ),
 
         CREATE_TABLE(
                 "(CREATE\\s+TABLE.*)",
-                SINGLE_OPERAND),
+                SINGLE_OPERAND
+        ),
 
         SET(
                 "SET(\\s+(\\S+)\\s*=(.*))?", // whitespace is only ignored on the left side of '='
@@ -87,7 +94,59 @@ public class SqlCommandParser {
                         return Optional.of(new String[0]);
                     }
                     return Optional.of(new String[]{operands[1], operands[2]});
-                });
+                }
+        ),
+
+        SET_HIVE_OR_MAPRED(
+                "SET(\\s+\\b(hive\\S+|mapreduce\\S+)\\b\\s*=(.*))", // whitespace is only ignored on the left side of '='
+                (operands) -> {
+                    if (operands.length < 3) {
+                        return Optional.empty();
+                    } else if (operands[0] == null) {
+                        return Optional.of(new String[0]);
+                    }
+                    return Optional.of(new String[]{operands[1], operands[2]
+                    });
+                }
+        ),
+
+        UDF(
+                "UDF(\\s+(\\S+))?",
+                SINGLE_OPERAND
+        ),
+
+        USE_CATALOG(
+                "(USE\\s+CATALOG.*)",
+                SINGLE_OPERAND
+        ),
+
+        USE_DATABASE(
+                "(USE\\s+\\b((?!CATALOG)\\w)+\\b)",
+                SINGLE_OPERAND
+        ),
+
+        ENABLE_HIVE(
+                "ENABLE\\s+\\bHIVE\\b",
+                NO_OPERANDS
+        ),
+
+        DROP_TABLE(
+                "(DROP\\s+TABLE.*)",
+                SINGLE_OPERAND
+        ),
+
+        CACHE_FILE(
+                "CACHEFILE(\\s+(\\S+)\\s+PATH\\s+(\\S+))?",
+                (operands) -> {
+                    if (operands.length < 3) {
+                        return Optional.empty();
+                    } else if (operands[0] == null) {
+                        return Optional.of(new String[0]);
+                    }
+                    return Optional.of(new String[]{operands[1], operands[2]});
+                }
+        );
+
 
         public final Pattern pattern;
         public final Function<String[], Optional<String[]>> operandConverter;
