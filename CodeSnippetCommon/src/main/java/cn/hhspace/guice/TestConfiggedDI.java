@@ -1,6 +1,7 @@
 package cn.hhspace.guice;
 
 import cn.hhspace.guice.demo.Db;
+import cn.hhspace.guice.modules.BaseModules;
 import cn.hhspace.guice.modules.DbModule;
 import cn.hhspace.guice.modules.PropertiesModule;
 import com.google.common.collect.ImmutableList;
@@ -22,6 +23,7 @@ public class TestConfiggedDI {
 
     private static Collection<Module> makeDefaultModules() {
         return ImmutableList.of(
+                new BaseModules(),
                 new PropertiesModule(Arrays.asList("runtime.properties")),
                 new DbModule()
         );
