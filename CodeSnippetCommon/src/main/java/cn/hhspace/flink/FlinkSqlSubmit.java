@@ -102,13 +102,14 @@ public class FlinkSqlSubmit {
                 dropTable(cmdCall);
                 break;
             case ENABLE_HIVE:
-                enableHive();
+                //enableHive();
                 break;
             default:
                 throw new RuntimeException("Unsupported command: " + cmdCall.command);
         }
     }
 
+    /*
     private void enableHive(){
         tEnv.getConfig().setSqlDialect(SqlDialect.HIVE);
         if (hiveCatalog == null) {
@@ -122,6 +123,7 @@ public class FlinkSqlSubmit {
         tEnv.useCatalog("hive");
         tEnv.loadModule("hive", new HiveModule("1.2.1"));
     }
+    */
 
 
     private void callSetHiveVars(SqlCommandParser.SqlCommandCall cmdCall) {

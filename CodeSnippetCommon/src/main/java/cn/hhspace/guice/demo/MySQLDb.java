@@ -1,4 +1,4 @@
-package cn.hhspace.guice.mapbinder;
+package cn.hhspace.guice.demo;
 
 /**
  * mysql实现类

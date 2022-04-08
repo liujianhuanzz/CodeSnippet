@@ -1,5 +1,9 @@
-package cn.hhspace.guice.mapbinder;
+package cn.hhspace.guice.modules;
 
+import cn.hhspace.guice.mapbinder.ConfiggedProvider;
+import cn.hhspace.guice.demo.Db;
+import cn.hhspace.guice.demo.MySQLDb;
+import cn.hhspace.guice.demo.PostGreSQLDb;
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Module;

@@ -1,8 +1,8 @@
 package cn.hhspace.guice;
 
-import cn.hhspace.guice.mapbinder.Db;
-import cn.hhspace.guice.mapbinder.DbModule;
-import cn.hhspace.guice.mapbinder.PropertiesModule;
+import cn.hhspace.guice.demo.Db;
+import cn.hhspace.guice.modules.DbModule;
+import cn.hhspace.guice.modules.PropertiesModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
