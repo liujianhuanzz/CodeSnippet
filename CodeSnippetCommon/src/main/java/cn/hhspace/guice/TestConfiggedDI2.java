@@ -1,5 +1,6 @@
 package cn.hhspace.guice;
 
+import cn.hhspace.guice.demo.ConditionInjectThread;
 import cn.hhspace.guice.demo.Db;
 import cn.hhspace.guice.modules.BaseModules;
 import cn.hhspace.guice.modules.DbModule;
@@ -8,25 +9,27 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.util.Modules;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class TestConfiggedDI {
+/**
+ * 用来测试条件注入
+ */
+
+public class TestConfiggedDI2 {
 
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(makeDefaultModules());
-        Db instance = injector.getInstance(Db.class);
-        instance.connectTest();
-        instance.doQuery();
+        ConditionInjectThread injectThread = new ConditionInjectThread();
+        injector.injectMembers(injectThread);
+        injectThread.run();
     }
 
     private static Collection<Module> makeDefaultModules() {
         return ImmutableList.of(
                 new BaseModules(),
-                new PropertiesModule(Arrays.asList("runtime.properties")),
-                new DbModule()
+                new PropertiesModule(Arrays.asList("runtime.properties"))
         );
     }
 }

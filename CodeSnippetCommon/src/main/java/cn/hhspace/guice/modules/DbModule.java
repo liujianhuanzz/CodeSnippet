@@ -13,6 +13,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 
 public class DbModule implements Module {
+
     @Override
     public void configure(Binder binder) {
 
