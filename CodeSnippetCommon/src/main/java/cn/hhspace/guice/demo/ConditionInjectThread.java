@@ -1,5 +1,6 @@
 package cn.hhspace.guice.demo;
 
+import cn.hhspace.guice.demo.annotations.DbImplement;
 import cn.hhspace.guice.modules.DbModule2;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -7,6 +8,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @Author: Jianhuan-LIU
@@ -23,28 +25,31 @@ public class ConditionInjectThread implements Runnable{
         this.baseInjector = injector;
     }
 
-    @Inject
-    DbModuleTest dbModuleTest;
-
     @Override
     public void run() {
         Properties properties = baseInjector.getInstance(Properties.class);
         Module dbModule = new DbModule2(properties);
         baseInjector.injectMembers(dbModule);
 
-        Guice.createInjector(dbModule);
-        dbModuleTest.getDb().connectTest();
+        Injector injector = Guice.createInjector(dbModule);
+
+        Properties props = injector.getInstance(Properties.class);
+        System.out.println(props.getProperty("db.type"));
+
+        for (Db db : injector.getInstance(DbModuleTest.class).getDbs()) {
+            db.connectTest();
+        }
     }
 
     static class DbModuleTest {
-        Db db;
         @Inject
-        public DbModuleTest(Db db) {
-            this.db = db;
-        }
+        @DbImplement
+        Set<Db> dbs;
 
-        public Db getDb() {
-            return db;
+        public DbModuleTest() {}
+
+        public Set<Db> getDbs() {
+            return dbs;
         }
     }
 }

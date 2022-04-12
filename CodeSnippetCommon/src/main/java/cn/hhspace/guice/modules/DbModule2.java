@@ -3,6 +3,7 @@ package cn.hhspace.guice.modules;
 import cn.hhspace.guice.demo.Db;
 import cn.hhspace.guice.demo.MySQLDb;
 import cn.hhspace.guice.demo.PostGreSQLDb;
+import cn.hhspace.guice.demo.annotations.DbImplement;
 import cn.hhspace.guice.mapbinder.ConditionalMultibind;
 import com.google.common.base.Predicates;
 import com.google.inject.Binder;
@@ -25,7 +26,7 @@ public class DbModule2 implements Module {
 
     @Override
     public void configure(Binder binder) {
-        ConditionalMultibind<Db> multibind = ConditionalMultibind.create(properties, binder, Db.class);
+        ConditionalMultibind<Db> multibind = ConditionalMultibind.create(properties, binder, Db.class, DbImplement.class);
         multibind.addConditionBinding("db.type", Predicates.equalTo("mysql"), MySQLDb.class);
         multibind.addConditionBinding("db.type", Predicates.equalTo("postgresql"), PostGreSQLDb.class);
     }
