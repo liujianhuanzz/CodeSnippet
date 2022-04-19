@@ -5,6 +5,7 @@ import cn.hhspace.guice.demo.Db;
 import cn.hhspace.guice.modules.BaseModules;
 import cn.hhspace.guice.modules.DbModule;
 import cn.hhspace.guice.modules.PropertiesModule;
+import cn.hhspace.guice.modules.SecondaryModule;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -29,7 +30,10 @@ public class TestConfiggedDI2 {
     private static Collection<Module> makeDefaultModules() {
         return ImmutableList.of(
                 new BaseModules(),
-                new PropertiesModule(Arrays.asList("runtime.properties"))
+                new PropertiesModule(Arrays.asList("runtime.properties")),
+                binder -> {
+                    binder.bind(SecondaryModule.class);
+                }
         );
     }
 }

@@ -1,19 +1,23 @@
 package cn.hhspace.guice.demo;
 
 import cn.hhspace.guice.demo.annotations.DbImplement;
+import cn.hhspace.guice.mapbinder.JsonConfigProvider;
+import cn.hhspace.guice.modules.BaseModules;
 import cn.hhspace.guice.modules.DbModule2;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Module;
+import cn.hhspace.guice.modules.SecondaryModule;
+import com.google.common.collect.ImmutableList;
+import com.google.inject.*;
+import com.google.inject.util.Modules;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 /**
  * @Author: Jianhuan-LIU
  * @Date: 2022/4/12 3:57 下午
- * @Descriptions: 当前运行不起来，还差研究一下怎么写
+ * @Descriptions: 已经调通了
  */
 public class ConditionInjectThread implements Runnable{
 
@@ -27,11 +31,14 @@ public class ConditionInjectThread implements Runnable{
 
     @Override
     public void run() {
-        Properties properties = baseInjector.getInstance(Properties.class);
-        Module dbModule = new DbModule2(properties);
-        baseInjector.injectMembers(dbModule);
 
-        Injector injector = Guice.createInjector(dbModule);
+        List<Module> modules = new ArrayList<>();
+
+        baseInjector.injectMembers(SecondaryModule.class);
+        modules.add(baseInjector.getInstance(SecondaryModule.class));
+        modules.add(new DbModule2(baseInjector.getInstance(Properties.class)));
+
+        Injector injector = Guice.createInjector(modules);
 
         Properties props = injector.getInstance(Properties.class);
         System.out.println(props.getProperty("db.type"));
