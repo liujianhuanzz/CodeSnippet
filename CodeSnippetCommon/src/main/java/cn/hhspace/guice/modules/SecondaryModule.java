@@ -1,11 +1,9 @@
 package cn.hhspace.guice.modules;
 
-import cn.hhspace.guice.mapbinder.JsonConfigurator;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 
-import javax.validation.Validator;
 import java.util.Properties;
 
 /**

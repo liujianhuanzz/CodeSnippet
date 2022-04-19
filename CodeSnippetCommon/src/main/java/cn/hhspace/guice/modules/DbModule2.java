@@ -9,7 +9,6 @@ import cn.hhspace.guice.mapbinder.ConditionalMultibind;
 import cn.hhspace.guice.mapbinder.JsonConfigProvider;
 import com.google.common.base.Predicates;
 import com.google.inject.Binder;
-import com.google.inject.Inject;
 import com.google.inject.Module;
 
 import java.util.Properties;

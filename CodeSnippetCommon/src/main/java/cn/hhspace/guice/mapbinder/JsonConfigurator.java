@@ -1,5 +1,6 @@
 package cn.hhspace.guice.mapbinder;
 
+import cn.hhspace.utils.Logger;
 import cn.hhspace.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,8 +32,9 @@ import java.util.*;
  * @Descriptions:
  */
 
-@Slf4j
 public class JsonConfigurator {
+
+    private static final Logger log = new Logger(JsonConfigurator.class);
 
     private final ObjectMapper jsonMapper;
     private final Validator validator;
