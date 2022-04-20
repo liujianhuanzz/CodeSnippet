@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PostGreSQLDbConfig {
 
     @JsonProperty
+    private String enabled = "";
+
+    @JsonProperty
     private String username = "";
 
     @JsonProperty
@@ -21,5 +24,9 @@ public class PostGreSQLDbConfig {
 
     public String getPassword() {
         return password;
+    }
+
+    public Boolean getEnabled() {
+        return Boolean.valueOf(enabled);
     }
 }

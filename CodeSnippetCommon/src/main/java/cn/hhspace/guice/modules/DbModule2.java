@@ -29,8 +29,8 @@ public class DbModule2 implements Module {
     @Override
     public void configure(Binder binder) {
         ConditionalMultibind<Db> multibind = ConditionalMultibind.create(properties, binder, Db.class, DbImplement.class);
-        multibind.addConditionBinding("db.type", Predicates.equalTo("mysql"), MySQLDb.class);
-        multibind.addConditionBinding("db.type", Predicates.equalTo("postgresql"), PostGreSQLDb.class);
+        multibind.addConditionBinding("db.type.mysql.enabled", Predicates.equalTo("true"), MySQLDb.class);
+        multibind.addConditionBinding("db.type.postgresql.enabled", Predicates.equalTo("true"), PostGreSQLDb.class);
 
         JsonConfigProvider.bind(binder, "db.type.postgresql", PostGreSQLDbConfig.class);
     }
