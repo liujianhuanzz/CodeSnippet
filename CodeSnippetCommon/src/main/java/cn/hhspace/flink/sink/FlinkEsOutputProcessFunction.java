@@ -72,22 +72,17 @@ public class FlinkEsOutputProcessFunction extends ProcessFunction<SensorReading,
 
     public RestClient getRestClient() {
         String[] splitEs = esLists.split(",");
-        HttpHost[] HttpEsLists = new HttpHost[splitEs.length];
+        HttpHost[] httpEsLists = new HttpHost[splitEs.length];
         for (int i=0; i < splitEs.length; i++) {
-            HttpEsLists[i] = new HttpHost(splitEs[i], 9200, "http");
+            httpEsLists[i] = new HttpHost(splitEs[i], 9200, "http");
         }
 
-        RestClientBuilder builder = RestClient.builder(HttpEsLists);
+        RestClientBuilder builder = RestClient.builder(httpEsLists);
 
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("es_admin", "%36.Hadoop*"));
 
-        builder.setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
-            @Override
-            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpAsyncClientBuilder) {
-                return httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-            }
-        });
+        builder.setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
 
         return builder.build();
     }

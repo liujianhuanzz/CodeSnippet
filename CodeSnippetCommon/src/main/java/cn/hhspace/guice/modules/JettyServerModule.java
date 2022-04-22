@@ -23,7 +23,6 @@ import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ScheduledExecutorScheduler;
 
-import javax.servlet.ServletException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class JettyServerModule extends JerseyServletModule {
         }
 
         @Override
-        protected ResourceConfig getDefaultResourceConfig(Map<String, Object> props, WebConfig webConfig) throws ServletException {
+        protected ResourceConfig getDefaultResourceConfig(Map<String, Object> props, WebConfig webConfig) {
             return new DefaultResourceConfig(resources);
         }
     }
