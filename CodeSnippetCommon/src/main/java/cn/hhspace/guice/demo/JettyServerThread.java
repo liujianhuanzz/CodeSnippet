@@ -2,8 +2,8 @@ package cn.hhspace.guice.demo;
 
 import cn.hhspace.guice.demo.controller.HelloResource;
 import cn.hhspace.guice.demo.controller.IndexResource;
-import cn.hhspace.guice.jetty.JettyServerInitializer;
-import cn.hhspace.guice.jetty.MyJettyServerInitializer;
+import cn.hhspace.guice.jetty.initialize.JettyServerInitializer;
+import cn.hhspace.guice.jetty.initialize.MyJettyServerInitializer;
 import cn.hhspace.guice.lifecycle.LifecycleModule;
 import cn.hhspace.guice.mapbinder.Jerseys;
 import cn.hhspace.guice.mapbinder.annotations.LazySingleton;

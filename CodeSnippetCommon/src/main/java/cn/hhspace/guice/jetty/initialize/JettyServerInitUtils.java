@@ -1,4 +1,4 @@
-package cn.hhspace.guice.jetty;
+package cn.hhspace.guice.jetty.initialize;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;

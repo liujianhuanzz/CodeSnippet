@@ -1,4 +1,4 @@
-package cn.hhspace.guice.jetty;
+package cn.hhspace.guice.jetty.initialize;
 
 import cn.hhspace.guice.inialization.ServerConfig;
 import com.google.inject.Inject;
@@ -7,7 +7,6 @@ import com.google.inject.servlet.GuiceFilter;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;

@@ -1,4 +1,4 @@
-package cn.hhspace.guice.jetty;
+package cn.hhspace.guice.jetty.initialize;
 
 import com.google.inject.Injector;
 import org.eclipse.jetty.server.Server;

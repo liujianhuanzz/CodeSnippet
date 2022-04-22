@@ -1,11 +1,11 @@
 package cn.hhspace.guice.modules;
 
 import cn.hhspace.guice.common.RE;
-import cn.hhspace.guice.demo.controller.IndexResource;
 import cn.hhspace.guice.inialization.ServerConfig;
-import cn.hhspace.guice.jetty.JettyServerInitializer;
+import cn.hhspace.guice.jetty.exception.BadRequestExceptionMapper;
+import cn.hhspace.guice.jetty.exception.NotFoundRequestExceptionMapper;
+import cn.hhspace.guice.jetty.initialize.JettyServerInitializer;
 import cn.hhspace.guice.lifecycle.Lifecycle;
-import cn.hhspace.guice.mapbinder.Jerseys;
 import cn.hhspace.guice.mapbinder.JsonConfigProvider;
 import cn.hhspace.guice.mapbinder.annotations.JSR311Resource;
 import cn.hhspace.guice.mapbinder.annotations.LazySingleton;
@@ -46,6 +46,8 @@ public class JettyServerModule extends JerseyServletModule {
 
         binder.bind(GuiceContainer.class).to(MyGuiceContainer.class);
         binder.bind(MyGuiceContainer.class).in(Scopes.SINGLETON);
+        binder.bind(NotFoundRequestExceptionMapper.class).in(Singleton.class);
+        binder.bind(BadRequestExceptionMapper.class).in(Singleton.class);
 
         serve("/*").with(MyGuiceContainer.class);
 
