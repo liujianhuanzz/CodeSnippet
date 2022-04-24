@@ -103,7 +103,7 @@ public class JettyServerModule extends JerseyServletModule {
             threadPool = new QueuedThreadPool(
                     numServerThreads,
                     numServerThreads,
-                    60000, // same default is used in other case when threadPool = new QueuedThreadPool()
+                    60000,
                     new LinkedBlockingQueue<>(config.getQueueSize())
             );
         }
@@ -137,6 +137,53 @@ public class JettyServerModule extends JerseyServletModule {
         if (gracefulStop > 0) {
             server.setStopTimeout(gracefulStop);
         }
+
+        addServerLifecycleHooks(server);
+
+        //initialize server
+        JettyServerInitializer initializer = injector.getInstance(JettyServerInitializer.class);
+        initializer.initialize(server, injector);
+
+        startServerByLifecycleModule(server, lifecycle, config);
+
+        return server;
+    }
+
+    private void startServerByLifecycleModule(Server server, Lifecycle lifecycle, ServerConfig config) {
+
+        lifecycle.addHandler(
+                new Lifecycle.Handler() {
+                    @Override
+                    public void start() throws Exception {
+                        log.debug("Starting Jetty Server...");
+                        server.start();
+                    }
+
+                    @Override
+                    public void stop() {
+                        try {
+                            final long unannouncedDelay = config.getUnannouncePropagationDelay().toStandardDuration().getMillis();
+                            if (unannouncedDelay > 0) {
+                                log.info("Sleeping %s ms for un-announcement to propagate.", unannouncedDelay);
+                                Thread.sleep(unannouncedDelay);
+                            } else {
+                                log.debug("Skipping unannounced wait.");
+                            }
+                            log.debug("Stopping Jetty Server...");
+                            server.stop();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            throw new RE(e, "Interrupted waiting for jetty shutdown.");
+                        } catch (Exception e) {
+                            log.warn(e, "Unable to stop Jetty server.");
+                        }
+                    }
+                },
+                Lifecycle.Stage.SERVER
+        );
+    }
+
+    private void addServerLifecycleHooks(Server server) {
         server.addLifeCycleListener(new LifeCycle.Listener()
         {
             @Override
@@ -148,7 +195,7 @@ public class JettyServerModule extends JerseyServletModule {
             @Override
             public void lifeCycleStarted(LifeCycle event)
             {
-                log.debug("Jetty lifeycle started [%s]", event.getClass());
+                log.debug("Jetty lifecycle started [%s]", event.getClass());
             }
 
             @Override
@@ -169,42 +216,5 @@ public class JettyServerModule extends JerseyServletModule {
                 log.debug("Jetty lifecycle stopped [%s]", event.getClass());
             }
         });
-
-        //initialize server
-        JettyServerInitializer initializer = injector.getInstance(JettyServerInitializer.class);
-        initializer.initialize(server, injector);
-
-        lifecycle.addHandler(
-                new Lifecycle.Handler() {
-                    @Override
-                    public void start() throws Exception {
-                        log.debug("Starting Jetty Server...");
-                        server.start();
-                    }
-
-                    @Override
-                    public void stop() {
-                        try {
-                            final long unannounceDelay = config.getUnannouncePropagationDelay().toStandardDuration().getMillis();
-                            if (unannounceDelay > 0) {
-                                log.info("Sleeping %s ms for unannouncement to propagate.", unannounceDelay);
-                                Thread.sleep(unannounceDelay);
-                            } else {
-                                log.debug("Skipping unannounce wait.");
-                            }
-                            log.debug("Stopping Jetty Server...");
-                            server.stop();
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            throw new RE(e, "Interrupted waiting for jetty shutdown.");
-                        } catch (Exception e) {
-                            log.warn(e, "Unable to stop Jetty server.");
-                        }
-                    }
-                },
-                Lifecycle.Stage.SERVER
-        );
-
-        return server;
     }
 }
