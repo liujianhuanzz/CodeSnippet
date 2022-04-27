@@ -23,6 +23,10 @@ public abstract class BaseThread implements Runnable{
         this.baseInjector = injector;
     }
 
+    /**
+     * 由子类实现，用于加载特定的Guice Module, 用这些Modules来覆盖默认的Modules
+     * @return List
+     */
     protected abstract List<? extends Module> getModules();
 
     @Override
