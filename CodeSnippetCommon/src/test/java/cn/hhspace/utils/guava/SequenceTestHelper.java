@@ -17,7 +17,7 @@ public class SequenceTestHelper {
         testAll("", seq, nums);
     }
 
-    private static void testAll(String prefix, Sequence<Integer> seq, List<Integer> nums) throws IOException {
+    public static void testAll(String prefix, Sequence<Integer> seq, List<Integer> nums) throws IOException {
         testAccumulation(prefix, seq, nums);
         testYield(prefix, seq, nums);
     }
