@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package cn.hhspace.protobuf.proto;
+
+option java_package = "cn.hhspace.protobuf.proto";
+
+option java_outer_classname = "DemoProto";
+
+message Demo{
+  //自身属性
+  int32 id = 1;
+  string code = 2;
+  string name = 3;
+}

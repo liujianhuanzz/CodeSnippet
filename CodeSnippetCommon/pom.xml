@@ -18,10 +18,24 @@
         <elasticsearch.xpack.version>7.17.0</elasticsearch.xpack.version>
         <jetty.version>9.4.40.v20210413</jetty.version>
         <jersey.version>1.19.3</jersey.version>
+        <protobuf.java.version>3.21.5</protobuf.java.version>
     </properties>
 
     <artifactId>CodeSnippetCommon</artifactId>
     <dependencies>
+        <!--  protobuf 支持 Java 核心包-->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.java.version}</version>
+        </dependency>
+
+        <!--  proto 与 Json 互转会用到-->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>${protobuf.java.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>transport</artifactId>
