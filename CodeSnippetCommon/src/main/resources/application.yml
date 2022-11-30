@@ -1,0 +1,3 @@
+etl:
+  beanfactory:
+    type: File

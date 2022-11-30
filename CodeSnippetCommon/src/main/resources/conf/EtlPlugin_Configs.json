@@ -1,0 +1,26 @@
+[
+  {
+    "pluginType":"KafkaConfig",
+    "category":"Config",
+    "catalog":"AllowTest,AllowCopy",
+    "java_class":"cn.hhspace.etl.config.KafkaConfig",
+    "uiInfo":{"label":"kafka配置"},
+    "version":"1.0"
+  },
+  {
+    "pluginType":"LocalEtlServerCfg",
+    "category":"Config",
+    "catalog":"AllowCopy",
+    "java_class":"cn.hhspace.etl.config.LocalEtlServerCfg",
+    "uiInfo":{"label":"部署服务-本地ETL服务器"},
+    "version":"1.0"
+  },
+  {
+    "pluginType":"EtlOnYarnServerCfg",
+    "category":"Config",
+    "catalog":"AllowCopy",
+    "java_class":"cn.hhspace.etl.config.EtlOnYarnServerCfg",
+    "uiInfo":{"label":"部署服务-ETLOnYarn服务器"},
+    "version":"1.0"
+  }
+]

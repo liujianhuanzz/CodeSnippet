@@ -1,2 +1,5 @@
 .idea
 target
+CodeSnippetCommon/src/main/resources/yarn-site.xml
+CodeSnippetCommon/src/main/resources/core-site.xml
+CodeSnippetCommon/src/main/resources/hdfs-site.xml

@@ -1,0 +1,28 @@
+[
+  {
+    "pluginType": "KafkaTopic",
+    "category": "Node/Input",
+    "catalog": "输入类",
+    "java_class": "cn.hhspace.etl.etlflow.nodes.KafkaTopicSrc",
+    "hint": "接收指定的kafka-topic中的数据",
+    "uiInfo": {
+      "label": "Kafka输入",
+      "icon": "/icons/KafkaTopic.svg",
+      "cssClass": "i-data-input"
+    },
+    "version": "0.1"
+  },
+  {
+    "pluginType": "PrintOutput",
+    "category": "Node/Output",
+    "catalog": "输出类",
+    "java_class": "cn.hhspace.etl.etlflow.nodes.PrintOutput",
+    "hint": "将数据直接打印到控制台（方便查看）",
+    "uiInfo": {
+      "label": "Console输出",
+      "icon": "/icons/PrintOutput.svg",
+      "cssClass": "i-data-input"
+    },
+    "version": "0.1"
+  }
+]

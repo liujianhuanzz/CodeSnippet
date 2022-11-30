@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 以Configuration为根节点，有一个status属性，这个属性表示log4j2本身的日志信息打印级别 -->
+<!-- monitorInterval配置成一个正整数，则每隔这么久的时间（秒），log4j2会刷新一次配置。如果不配置则不会动态刷新 -->
+<Configuration status="INFO" monitorInterval="30">
+    <Properties>
+        <!-- 日志的路径 -->
+        <Property name="logdir">${sys:log.dir}</Property>
+        <!-- 日志的格式，打印位置会影响到性能 -->
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5p] [%c Line:%L] - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <!-- 这个输出控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="UTF-8">
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingRandomAccessFile name="DetailLog" fileName="${logdir}/etl_detail.log"
+                                 filePattern="${logdir}/logs/etl_detail-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为同一文件夹下一个小时内最多7个文件 -->
+            <DefaultRolloverStrategy max="10">
+                <!-- 对于指定的路径下的指定后缀的文件，只保留5天的日志文件，那么最多会有5天*10个日志文件 -->
+                <!-- 注意应用需要根据业务需求和磁盘大小评估需要保留的日志个数，对于500M的日志文件来说，要根据应用日志的情况，观察单个日志压缩后文件大小，并计算总大小需要的空间 -->
+                <Delete basePath="${logdir}/logs" maxDepth="1">
+                    <IfFileName glob="*.gz" />
+                    <IfLastModified age="5d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <AsyncRoot level="INFO" includeLocation="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="DetailLog"/>
+        </AsyncRoot>
+        <AsyncLogger name="org.apache" level="WARN" />
+    </Loggers>
+</Configuration>

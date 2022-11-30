@@ -79,7 +79,7 @@ public class FlinkSinkToKEMH {
                         .withUrl(String.format("jdbc:mysql://%s:3306/nice", options.getMysqlAddress()))
                         .withDriverName("com.mysql.jdbc.Driver")
                         .withUsername("root")
-                        .withPassword("Hadoop@360")
+                        .withPassword("xxxx")
                         .build()
         ));
 

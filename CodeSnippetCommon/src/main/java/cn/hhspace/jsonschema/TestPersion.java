@@ -28,7 +28,7 @@ public class TestPersion {
     @JsonSchemaDescription("这个字段就是用来指定测试人的年龄")
     public int age = 30;
 
-    @JsonSchemaFormat("REF_ID_REQUIRED:id&name:/noah2/api/v1/serverConfigs?pluginType=KafkaConfig")
+    @JsonSchemaFormat("REF_ID_REQUIRED:id&name:/api/v1/serverConfigs?pluginType=KafkaConfig")
     @JsonProperty(required = true)
     @JsonSchemaTitle("测试人ID")
     public String personId;

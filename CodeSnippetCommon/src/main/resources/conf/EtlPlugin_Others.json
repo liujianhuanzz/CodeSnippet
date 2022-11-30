@@ -1,0 +1,20 @@
+[
+  {
+    "pluginType":"Flow",
+    "category":"Flow",
+    "java_class":"cn.hhspace.etl.etlflow.Flow",
+    "uiInfo":{
+
+    },
+    "version":"0.1"
+  },
+  {
+    "pluginType":"Deploy",
+    "category":"Deploy",
+    "java_class":"cn.hhspace.etl.deploy.Deploy",
+    "uiInfo":{
+
+    },
+    "version":"0.1"
+  }
+]
