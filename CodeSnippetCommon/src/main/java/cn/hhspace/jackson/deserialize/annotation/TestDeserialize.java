@@ -45,5 +45,35 @@ public class TestDeserialize {
         System.out.println("大佬！您已获得星空魔杖！属性增幅："+ starWand.getEffect().toString()+"！");
         System.out.println("大佬！您已获得代达罗斯之殇，增加了 " + daedalus.getDamage() + " 点输出！");
         System.out.println("大佬！您已获得代达巨大瓶饮料，it "+ hugeDrink.getEffect()+"!");
+
+        String bigHeroWithHugeDrinkStr = "{\n" +
+                " \"name\":\"Big\", \n" +
+                " \"size\":200,\n" +
+                " \"equipment\": {\n" +
+                "    \"name\":\"Huge drink\",\n" +
+                "    \"capacity\":500000,\n" +
+                "    \"effect\":\"quenching your thirst and tasting good\"\n" +
+                "}" +
+                "}";
+
+        String bigHeroWithDaedalusStr = "{\n" +
+                " \"name\":\"Big\", \n" +
+                " \"size\":500,\n" +
+                " \"equipment\": {\n" +
+                "    \"name\":\"Daedalus\",\n" +
+                "    \"weight\":\"5kg\",\n" +
+                "    \"damage\":1200,\n" +
+                "    \"roles\":[\"assassinator\",\"soldier\"],\n" +
+                "    \"origin\":{\n" +
+                "             \"name\":\"Mainland of warcraft\",\n" +
+                "             \"date\":\"142-12-25\"\n" +
+                "    }\n" +
+                "}" +
+                "}";
+
+        BigHero hero1 = (BigHero) mapper.readValue(bigHeroWithHugeDrinkStr, Hero.class);
+        BigHero hero2 = (BigHero) mapper.readValue(bigHeroWithDaedalusStr, Hero.class);
+        System.out.println(hero1);
+        System.out.println(hero2);
     }
 }

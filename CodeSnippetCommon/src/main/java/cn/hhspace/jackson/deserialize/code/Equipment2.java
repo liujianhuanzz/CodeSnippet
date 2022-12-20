@@ -1,6 +1,5 @@
 package cn.hhspace.jackson.deserialize.code;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
