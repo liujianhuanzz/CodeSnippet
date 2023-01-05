@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "defaultSchema": "ck",
+  "schemas": [
+    {
+      "name": "ck",
+      "type": "custom",
+      "factory": "org.apache.calcite.adapter.jdbc.JdbcSchema$Factory",
+      "operand": {
+        "jdbcDriver": "com.clickhouse.jdbc.ClickHouseDriver",
+        "jdbcUrl": "jdbc:ch://10.48.202.75:8123/access",
+        "jdbcUser": "admin",
+        "jdbcPassword": "Dly9DvXcAT",
+        "jdbcSchema": "access"
+      }
+    }, {
+      "name": "ck_view",
+      "autoLattice": true
+    }
+  ]
+}

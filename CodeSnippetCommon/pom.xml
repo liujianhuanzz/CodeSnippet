@@ -35,6 +35,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jkube</groupId>
+                <artifactId>kubernetes-maven-plugin</artifactId>
+                <version>${jkube.version}</version>
+            </plugin>
         </plugins>
     </build>
     <modelVersion>4.0.0</modelVersion>
@@ -51,10 +56,13 @@
         <protobuf.java.version>3.21.5</protobuf.java.version>
         <hutool.version>5.7.22</hutool.version>
         <hadoop.version>2.7.2</hadoop.version>
-        <jackson.version>2.9.10</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
         <fastjson.version>1.2.83</fastjson.version>
         <jsonschema.version>1.0.33</jsonschema.version>
         <commons.collections4.version>4.1</commons.collections4.version>
+        <calcite.version>1.32.0</calcite.version>
+        <version.fabric8.client>6.3.1</version.fabric8.client>
+        <jkube.version>1.1.0</jkube.version>
     </properties>
 
     <dependencies>
@@ -62,6 +70,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <version>2.7.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.clickhouse/clickhouse-jdbc -->
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.2-patch11</version>
+            <classifier>all</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+            <version>${version.fabric8.client}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.calcite/calcite-core -->
+        <dependency>
+            <groupId>org.apache.calcite</groupId>
+            <artifactId>calcite-core</artifactId>
+            <version>${calcite.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -379,12 +411,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.9.10</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

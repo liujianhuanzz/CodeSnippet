@@ -1,0 +1,6 @@
+apiVersion: demo.hhspace.cn/v1alpha1
+kind: PodSet
+metadata:
+  name: example-podset
+spec:
+  replicas: 5
