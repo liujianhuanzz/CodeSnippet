@@ -89,6 +89,12 @@
             <artifactId>kubernetes-client</artifactId>
             <version>${version.fabric8.client}</version>
         </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>crd-generator-apt</artifactId>
+            <version>${version.fabric8.client}</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.calcite/calcite-core -->
         <dependency>
             <groupId>org.apache.calcite</groupId>
