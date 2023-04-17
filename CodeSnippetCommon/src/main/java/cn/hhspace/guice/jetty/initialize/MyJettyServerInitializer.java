@@ -36,6 +36,7 @@ public class MyJettyServerInitializer implements JettyServerInitializer{
 
         root.addFilter(GuiceFilter.class, "/index/*", null);
         root.addFilter(GuiceFilter.class, "/hello/*", null);
+        root.addFilter(GuiceFilter.class, "/pdf/*", null);
 
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(

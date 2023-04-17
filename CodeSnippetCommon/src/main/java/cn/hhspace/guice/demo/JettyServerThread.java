@@ -2,6 +2,7 @@ package cn.hhspace.guice.demo;
 
 import cn.hhspace.guice.demo.controller.HelloResource;
 import cn.hhspace.guice.demo.controller.IndexResource;
+import cn.hhspace.guice.demo.controller.PdfResource;
 import cn.hhspace.guice.jetty.initialize.JettyServerInitializer;
 import cn.hhspace.guice.jetty.initialize.MyJettyServerInitializer;
 import cn.hhspace.guice.lifecycle.LifecycleModule;
@@ -26,6 +27,7 @@ public class JettyServerThread extends BaseThread{
               binder -> {
                   Jerseys.addResource(binder, IndexResource.class);
                   Jerseys.addResource(binder, HelloResource.class);
+                  Jerseys.addResource(binder, PdfResource.class);
 
                   binder.bind(JettyServerInitializer.class).to(MyJettyServerInitializer.class).in(LazySingleton.class);
                   LifecycleModule.register(binder, Server.class);
