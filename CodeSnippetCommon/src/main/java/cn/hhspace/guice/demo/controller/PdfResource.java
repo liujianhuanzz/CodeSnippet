@@ -8,7 +8,9 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +37,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Jianhuan-LIU
@@ -145,80 +148,61 @@ public class PdfResource {
     public Response doGetPdfByChromeScroll() throws DocumentException, IOException {
         System.setProperty("webdriver.chrome.driver", getClass().getResource("/chromedriver").getPath());
 
-        // 创建 ChromeOptions 对象，设置启动参数
         ChromeOptions options = new ChromeOptions();
-        // 无头模式
+        //ssl证书支持
+        options.setCapability("acceptSslCerts", true);
+        //截屏支持
+        options.setCapability("takesScreenshot", true);
+        //css搜索支持
+        options.setCapability("cssSelectorsEnabled", true);
         options.addArguments("--headless");
-        // 禁用 GPU 硬件加速
-        options.addArguments("--disable-gpu");
-        // 禁用沙盒模式
         options.addArguments("--no-sandbox");
-        // 禁用临时文件存储
+        options.addArguments("--disable-gpu");
         options.addArguments("--disable-dev-shm-usage");
-        // 设置窗口大小
-        options.addArguments("--window-size=1920,1080");
+        options.setHeadless(true);
 
-        // 创建 WebDriver 对象，启动 Chrome 浏览器
-        WebDriver driver = new ChromeDriver(options);
+        ChromeDriver driver = new ChromeDriver(options);
+        //设置超时，避免有些内容加载过慢导致截不到图
+        driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.MINUTES);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
+        driver.manage().timeouts().setScriptTimeout(1, TimeUnit.MINUTES);
 
+        Long width = 2500L;
+        Long height = 3500L;
         try {
-            driver.get("https://www.baidu.com");
+            //设置需要访问的地址
+            driver.get("");
+            Thread.sleep(5000);
 
-            Map<String, Object> prefs = new HashMap<>();
-            prefs.put("plugins.plugins_disabled", new String[] {"Chrome PDF Viewer"});
-            prefs.put("plugins.always_open_pdf_externally", true);
-
-            driver.navigate().to("");
-
-            // 创建 AShot 对象
-            AShot ashot = new AShot();
-            ashot.coordsProvider(new WebDriverCoordsProvider());
-            ashot.shootingStrategy(ShootingStrategies.viewportPasting(100));
-
-            // 获取页面高度
-            int height = driver.findElement(By.tagName("body")).getSize().getHeight();
-
-            // 将页面分为多个视口截图
-            BufferedImage image = ashot.takeScreenshot(driver).getImage();
-            BufferedImage result = new BufferedImage(
-                    image.getWidth(),
-                    height,
-                    BufferedImage.TYPE_INT_RGB
-            );
-            result.getGraphics().drawImage(image, 0, 0, null);
-
-            int scroll = 0;
-            while (scroll < height) {
-                // 向下滚动一定的距离
-                ((RemoteWebDriver) driver).executeScript("window.scrollBy(0, 1000)");
-                scroll += 1000;
-
-                // 截图
-                image = ashot.takeScreenshot(driver).getImage();
-                result.getGraphics().drawImage(
-                        image,
-                        0,
-                        scroll - 1000,
-                        null
-                );
+            //设置窗口宽高，设置后才能截全
+            driver.manage().window().setSize(new Dimension(width.intValue(), height.intValue()));
+            //这里需要模拟滑动，有些是滑动的时候才加在的
+            long temp_height = 0;
+            while (true) {
+                //每次滚动500个像素，因为懒加载所以每次等待2S 具体时间可以根据具体业务场景去设置
+                Thread.sleep(2000);
+                driver.executeScript("window.scrollBy(0,500)");
+                temp_height += 1000;
+                if(temp_height>=height){
+                    break;
+                }
             }
 
-            // 将截图保存到文件
-            ImageIO.write(result, "png", new File("screenshot.png"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            //设置截图文件保存的路径
+            String screenshotPath = "output.png";
+            File srcFile = driver.getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(srcFile, new File(screenshotPath));
+        } catch (Exception e){
+            throw new RuntimeException("截图失败",e);
         } finally {
-            // 关闭 WebDriver 对象
             driver.quit();
         }
 
-
-        Document document = new Document(PageSize.A3, 50, 50, 50, 50);
+        Document document = new Document(new Rectangle(width.intValue()*2, height.intValue()), 0, 0, 0, 0);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, out);
         document.open();
-        document.add(Image.getInstance("screenshot.png"));
+        document.add(Image.getInstance("output.png"));
         document.close();
 
         // 将生成的 PDF 文件读入输入流
